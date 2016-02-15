@@ -2,7 +2,7 @@
 extension Array {
     /// Returns `true` if the calling collection is sorted and `false` otherwise
     ///
-    /// - Parameter comparitor: Returns `true` if `lhs` is less than `rhs`, returns `false` otherwise
+    /// - Parameter comparator: Returns `true` if `lhs` is less than `rhs`, returns `false` otherwise
     ///
     /// - Complexity: O(n)
     ///
@@ -27,7 +27,10 @@ extension Array {
     /// Returns a collection such that each element in the collection is greater than or equal to `value`
     ///
     /// - Parameter value: The value that is less than or equal to all elements in the returned collection
+	/// - Parameter comparator: Returns `true` if `lhs` is less than `rhs`, returns `false` otehrwise
+	///
     /// - Requires: The calling collection is expected to be sorted
+	///
     /// - Complexity: O(n)
     ///
     /// - Returns: The index of the element that provides a lower bound the the elements in the calling array
@@ -56,7 +59,9 @@ extension Array {
     /// Returns a collection such that each element in the collection is strictly less than `value`
     ///
     /// - Parameter value: The value that is strictly greater than all elements in the array
+	///
     /// - Requires: The calling collection is expected to be sorted
+	///
     /// - Complexity: O(n)
     ///
     /// - Returns: An array whose elements are all strictly less than `value`
@@ -79,6 +84,12 @@ extension Array {
         }
         return firstIndex
     }
+	
+	@warn_unused_result
+	func equalRange(value: Array.Element, @noescape comparator: (lhs: Array.Element, rhs: Array.Element) -> Bool) -> Range<Int>? {
+		assertionFailure("Not implemented yet")
+		return nil
+	}
     
     // ------------------------------------------------------------------------------------------------------------------
     //
@@ -95,13 +106,11 @@ extension Array {
     
 }
 
-extension SequenceType {
-    @warn_unused_result
-    func lowerBound(value: Generator.Element, @noescape comparator:(lhs: Generator.Element, rhs: Generator.Element) -> Bool) -> Int? {
-        
-        
-    }
-}
+// ======================================================================================================================
+//
+// MARK: - Tests
+//
+// ======================================================================================================================
 
 // Tests
 let sortedArray = [1, 2, 3, 4]
