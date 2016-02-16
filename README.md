@@ -15,16 +15,14 @@ The following API is proposed
 
 ```swift
 @warn_unused_result
-func lowerBound(@noescape isOrderedBelow: (partitioningValue: Self.Generator.Element) -> Bool) -> Index? {
+func lowerBound(@noescape isOrderedBelow: (partitioningValue: Self.Generator.Element) -> Bool) -> Index {
     assertionFailure("Not implemented")
-    return nil
 }
 ```
 
 ```swift
 @warn_unused_result
-func upperBound(@noescape isOrderedBelow: (partitioningValue: Self.Generator.Element) -> Bool) -> Index? {
+func upperBound(@noescape isOrderedBelow: (partitioningValue: Self.Generator.Element) -> Bool) -> Index {
     assertionFailure("Not implemented")
-    return nil
 }
 ```
