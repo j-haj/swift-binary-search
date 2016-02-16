@@ -13,7 +13,7 @@ extension CollectionType {
 	///
 	/// - Returns: An index such that each element evaluates as `false` with respect to `isOrderedBelow(_:)`
 	@warn_unused_result
-	func lowerBound(@noescape isOrderedBelow: (partitioningValue: Index) -> Bool) -> Index? {
+    func lowerBound(@noescape isOrderedBelow: (partitioningValue: Self.Generator.Element) -> Bool) -> Index? {
 		assertionFailure("Not implemented")
 		return nil
 	}
@@ -26,7 +26,7 @@ extension CollectionType {
 	///
 	/// - Returns: An index such that each element evaluates as `false` with respect to `isOrderedBelow(_:)`
 	@warn_unused_result
-	func upperBound(@noescape isOrderedBelow: (partitioningValue: Index) -> Bool) -> Index? {
+	func upperBound(@noescape isOrderedBelow: (partitioningValue: Self.Generator.Element) -> Bool) -> Index? {
 		assertionFailure("Not implemented")
 		return nil
 	}
