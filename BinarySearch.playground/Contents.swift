@@ -1,4 +1,42 @@
+// ======================================================================================================================
+//
+// MARK: - Collection Extension
+//
+// ======================================================================================================================
 
+extension CollectionType {
+	/// Returns an index such that each element at or above the indes is not less than the partition predicate
+	///
+	/// - Parameter isOrderedBelow: The partioning predicate. Returns `true` for elements in the collection that are
+	///                             ordered below, with respet to the partitioning predicate.
+	/// - Complexity: O(lg(n))
+	///
+	/// - Returns: An index such that each element evaluates as `false` with respect to `isOrderedBelow(_:)`
+	@warn_unused_result
+	func lowerBound(@noescape isOrderedBelow: (partitioningValue: Index) -> Bool) -> Index? {
+		assertionFailure("Not implemented")
+		return nil
+	}
+	
+	/// Returns an index such that each element below the index is strictly less than the partition predicate
+	///
+	/// - Parameter isOrderedBelow: The partioning predicate. Returns `true` for elements in the collection that are
+	///                             ordered below, with respet to the partitioning predicate.
+	/// - Complexity: O(lg(n))
+	///
+	/// - Returns: An index such that each element evaluates as `false` with respect to `isOrderedBelow(_:)`
+	@warn_unused_result
+	func upperBound(@noescape isOrderedBelow: (partitioningValue: Index) -> Bool) -> Index? {
+		assertionFailure("Not implemented")
+		return nil
+	}
+}
+
+// ======================================================================================================================
+//
+// MARK: - Array Extension
+//
+// ======================================================================================================================
 extension Array {
     /// Returns `true` if the calling collection is sorted and `false` otherwise
     ///
@@ -22,8 +60,7 @@ extension Array {
         // If executions reaches this point, collection must be sorted
         return true
     }
-    
-    
+	
     /// Returns a collection such that each element in the collection is greater than or equal to `value`
     ///
     /// - Parameter value: The value that is less than or equal to all elements in the returned collection
@@ -31,7 +68,7 @@ extension Array {
 	///
     /// - Requires: The calling collection is expected to be sorted
 	///
-    /// - Complexity: O(n)
+    /// - Complexity: O(lg(n))
     ///
     /// - Returns: The index of the element that provides a lower bound the the elements in the calling array
     @warn_unused_result
@@ -54,22 +91,18 @@ extension Array {
         return firstIndex
     }
     
-    
-    
     /// Returns a collection such that each element in the collection is strictly less than `value`
     ///
     /// - Parameter value: The value that is strictly greater than all elements in the array
 	///
     /// - Requires: The calling collection is expected to be sorted
 	///
-    /// - Complexity: O(n)
+    /// - Complexity: O(lg(n))
     ///
     /// - Returns: An array whose elements are all strictly less than `value`
     @warn_unused_result
     func upperBound(value: Array.Element, @noescape comparator: (lhs: Array.Element, rhs: Array.Element) -> Bool) -> Int?{
-        // WARN: Should we check `isSorted` here?
-        precondition(self.isSorted(comparator), "The calling CollectionType must be sorted")
-        
+		
         var len = self.count
         var firstIndex = 0
         while len > 0 {
