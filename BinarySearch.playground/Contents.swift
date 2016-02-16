@@ -13,9 +13,8 @@ extension CollectionType {
 	///
 	/// - Returns: An index such that each element evaluates as `false` with respect to `isOrderedBelow(_:)`
 	@warn_unused_result
-    func lowerBound(@noescape isOrderedBelow: (partitioningValue: Self.Generator.Element) -> Bool) -> Index? {
+    func lowerBound(@noescape isOrderedBelow: (partitioningValue: Self.Generator.Element) -> Bool) -> Index {
 		assertionFailure("Not implemented")
-		return nil
 	}
 	
 	/// Returns an index such that each element below the index is strictly less than the partition predicate
@@ -26,9 +25,8 @@ extension CollectionType {
 	///
 	/// - Returns: An index such that each element evaluates as `false` with respect to `isOrderedBelow(_:)`
 	@warn_unused_result
-	func upperBound(@noescape isOrderedBelow: (partitioningValue: Self.Generator.Element) -> Bool) -> Index? {
+	func upperBound(@noescape isOrderedBelow: (partitioningValue: Self.Generator.Element) -> Bool) -> Index {
 		assertionFailure("Not implemented")
-		return nil
 	}
 }
 
@@ -72,7 +70,7 @@ extension Array {
     ///
     /// - Returns: The index of the element that provides a lower bound the the elements in the calling array
     @warn_unused_result
-    func lowerBound(value: Array.Element, @noescape comparator: (lhs: Array.Element, rhs: Array.Element) -> Bool) -> Int? {
+    func lowerBound(value: Array.Element, @noescape comparator: (lhs: Array.Element, rhs: Array.Element) -> Bool) -> Int {
         // WARN: Should we check `isSorted` here?
         precondition(self.isSorted(comparator), "The calling CollectionType must be sorted")
         
@@ -101,7 +99,7 @@ extension Array {
     ///
     /// - Returns: An array whose elements are all strictly less than `value`
     @warn_unused_result
-    func upperBound(value: Array.Element, @noescape comparator: (lhs: Array.Element, rhs: Array.Element) -> Bool) -> Int?{
+    func upperBound(value: Array.Element, @noescape comparator: (lhs: Array.Element, rhs: Array.Element) -> Bool) -> Int {
 		
         var len = self.count
         var firstIndex = 0
@@ -133,7 +131,7 @@ extension Array {
     
     @warn_unused_result
     func binarySearch(value: Array.Element, @noescape comparator:(lhs: Array.Element, rhs: Array.Element) -> Bool) -> Bool {
-        guard let lb = lowerBound(value, comparator: comparator) else { return false }
+        let lb = lowerBound(value, comparator: comparator)
         return lb != self.count && !comparator(lhs: value, rhs: self[lb])
     }
     
