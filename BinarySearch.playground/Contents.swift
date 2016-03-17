@@ -7,19 +7,19 @@
 extension CollectionType {
 	/// Returns an index such that each element at or above the index is partitioned from below by the partition predicate
 	///
-	/// - Parameter partitionPredicate: The partioning predicate returns `true` for elements in the collection that are
-	///                                 ordered below, with respet to the partitioning predicate.
+	/// - Parameter isOrderedBefore: The partioning predicate returns `true` for elements in the collection that are
+	///                              ordered below, with respet to the partitioning predicate.
 	/// - Complexity: O(lg(n))
 	///
-	/// - Returns: An index such that each element at or above the returned index evaluates as `false` with respect to `partitionPredicate(_:)`
+	/// - Returns: An index such that each element at or above the returned index evaluates as `false` with respect to `isOrderedBefore(_:)`
 	@warn_unused_result
-    func lowerBound(@noescape partitionPredicate: Self.Generator.Element -> Bool) -> Index {
+    func lowerBound(@noescape isOrderedBefore: Self.Generator.Element -> Bool) -> Index {
         var len = self.startIndex.distanceTo(self.endIndex)
         var firstIndex = self.startIndex
         while len > 0 {
             let half = len/2
             let middle = firstIndex.advancedBy(half)
-            if partitionPredicate(self[middle]) {
+            if isOrderedBefore(self[middle]) {
                 firstIndex = middle.advancedBy(1)
                 len -= half + 1
             } else {
@@ -43,7 +43,7 @@ extension CollectionType {
         while len > 0 {
             let half = len/2
             let middle = firstIndex.advancedBy(half)
-            if !partitionPredicate(self[middle]) {
+            if partitionPredicate(self[middle]) {
                 len = half
             } else {
                 firstIndex = middle.advancedBy(1)
@@ -113,6 +113,22 @@ print("Predicate: { <9 }")
 print("For array: \(testArray2)\nLower bound for 9: \(testLower3)\nUpper bound for 9: \(testUpper3)")
 
 let testLower4 = testArray2.lowerBound { $0 <= 9 }
-let testUpper4 = testArray2.upperBound { $0 <= 9 }
+let testUpper4 = testArray2.upperBound { $0 > 9 }
 print("Predicate: { <=9 }")
 print("For array: \(testArray2)\nLower bound for 9: \(testLower4)\nUpper bound for 9: \(testUpper4)")
+
+
+print("\n---------------------------------------\n")
+
+
+let repeatTest = [1, 2, 3, 3, 3, 3, 4, 5]
+let repeatLower = repeatTest.lowerBound { $0 < 3 }
+let repeatUpper = repeatTest.upperBound { $0 > 3 }
+print("Repeat test: \(repeatTest)")
+print("Lower: \(repeatLower)\nUpper: \(repeatUpper)")
+if (repeatTest.lowerBound { $0 > 3 }) == (repeatTest.upperBound { $0 > 3 }) {
+    print("They are equivalent")
+}
+if (repeatTest.binarySearch{ $0 < 3 }) {
+    print("Found 3!")
+}
